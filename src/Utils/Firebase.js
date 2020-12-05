@@ -6,13 +6,13 @@ export class Firebase {
     constructor(){
 
         this._config = {
-            apiKey: "AIzaSyC4Q0EaHnjhioFOuBsWCUuCa7mw0QpkLhE",
-            authDomain: "wpp-clone-25df8.firebaseapp.com",
-            projectId: "wpp-clone-25df8",
-            storageBucket: "wpp-clone-25df8.appspot.com",
-            messagingSenderId: "608613281428",
-            appId: "1:608613281428:web:3329b37bea150455874e81",
-            measurementId: "G-8GK5KGM67B",
+            apiKey: "",
+            authDomain: "",
+            projectId: "",
+            storageBucket: "",
+            messagingSenderId: "",
+            appId: "",
+            measurementId: "",
         }
 
         this.init();
