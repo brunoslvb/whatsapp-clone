@@ -36,6 +36,9 @@ export class User extends Model{
     get photo(){ return this._data.photo; }
     set photo(value){ this._data.photo = value; }
 
+    get chatId(){ return this._data.chatId; }
+    set chatId(value){ this._data.chatId = value; }
+
 
     save(){
 
@@ -63,7 +66,7 @@ export class User extends Model{
 
     addContact(contact){
 
-        return User.getRef().getContactsRef(this.email).doc(btoa(contact.email)).set(contact.toJSON());
+        return User.getContactsRef(this.email).doc(btoa(contact.email)).set(contact.toJSON());
 
     }
 
