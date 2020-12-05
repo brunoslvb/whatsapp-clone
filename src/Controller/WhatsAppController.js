@@ -5,6 +5,7 @@ import { DocumentPreviewController } from './DocumentPreviewController';
 import { Firebase } from '../Utils/Firebase';
 import { User } from '../Model/User';
 import { Chat } from '../Model/Chat';
+import { Message } from '../Model/Message';
 
 export class WhatsAppController {
 
@@ -141,18 +142,8 @@ export class WhatsAppController {
 
                 div.on('click', e => {
 
-                    this.el.activeName.innerHTML = contact.name;
-                    this.el.activeStatus.innerHTML = contact.status;
-                    if (contact.photo) {
-                        let img = this.el.activePhoto;
-                        img.src = contact.photo;
-                        img.show();
-                    }
-
-                    this.el.home.hide();
-                    this.el.main.css({
-                        display: 'flex'
-                    });
+                    this.setActiveChat(contact);
+                   
                 });
 
                 this.el.contactsMessagesList.appendChild(div);
@@ -162,6 +153,25 @@ export class WhatsAppController {
         });
 
         this._user.getContacts();
+
+    }
+
+    setActiveChat(contact){
+
+        this._contactActive = contact;
+
+        this.el.activeName.innerHTML = contact.name;
+        this.el.activeStatus.innerHTML = contact.status;
+        if (contact.photo) {
+            let img = this.el.activePhoto;
+            img.src = contact.photo;
+            img.show();
+        }
+
+        this.el.home.hide();
+        this.el.main.css({
+            display: 'flex'
+        });
 
     }
 
@@ -314,22 +324,17 @@ export class WhatsAppController {
 
             contact.on('datachange', data => {
 
-                console.log('0');
-
                 if(data.name){
 
-                    
                     Chat.createIfNotExists(this._user.email, contact.email).then(chat => {
                         
                         console.log(chat);
-                        
+
                         contact.chatId = chat.id;
 
                         this._user.chatId = chat.id;
 
-                        console.log('1');
                         contact.addContact(this._user);
-                        console.log('2');
 
                         this._user.addContact(contact).then(() => {
                             this.el.btnClosePanelAddContact.click();
@@ -344,8 +349,6 @@ export class WhatsAppController {
                 } else {
                     console.error("Usuário não encontrado");
                 }
-
-                console.log('Saiu');
 
             });
 
@@ -611,7 +614,10 @@ export class WhatsAppController {
 
         this.el.btnSend.on('click', e => {
 
-            console.log(this.el.inputText.innerHTML);
+            Message.send(this._contactActive.chatId, this._user.email, 'text', this.el.inputText.innerHTML);
+
+            this.el.inputText.innerHTML = '';
+            this.el.panelEmojis.removeClass('open');
 
         });
 

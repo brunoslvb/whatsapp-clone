@@ -41,13 +41,9 @@ export class Chat extends Model {
 
                 Chat.getRef().doc(doc.id).get().then(chat => {
 
-                    console.log('Chat:', chat);
-
                     resolve(chat);
 
                 }).catch(err => {
-
-                    console.log('Err:', err);
 
                     reject(err);
                 });
@@ -75,12 +71,9 @@ export class Chat extends Model {
 
             Chat.find(meEmail, contactEmail).then(chats => {
 
-                console.log('Chats:', chats);
-
                 if(chats.empty) {
 
                     Chat.create(meEmail, contactEmail).then(chat => {
-                        console.log('Chat if:', chat);
 
                         resolve(chat);
 

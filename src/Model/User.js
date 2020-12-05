@@ -54,7 +54,7 @@ export class User extends Model{
 
     static getContactsRef(id){
 
-        return User.getRef().doc(id).collection('contacts');        
+        return User.getRef().doc(id).collection('contacts');
 
     }
 
